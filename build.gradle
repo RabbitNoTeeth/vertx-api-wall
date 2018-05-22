@@ -1,0 +1,51 @@
+group 'fun.bookish.vertx'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+
+
+buildscript {
+
+
+    repositories {
+        maven{
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+    }
+}
+
+sourceCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+
+repositories {
+    maven{
+        url "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
+}
+
+shadowJar  {
+    classifier = 'fat'
+    /*manifest {
+        attributes 'Main-Class': 'ApplicationMain'
+    }*/
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile 'io.vertx:vertx-web:3.4.2'
+    compile 'org.apache.commons:commons-lang3:3.7'
+    compile 'org.slf4j:slf4j-log4j12:1.7.21'
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'org.slf4j:slf4j-api:RELEASE'
+
+}
