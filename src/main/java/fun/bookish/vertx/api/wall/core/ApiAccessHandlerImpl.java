@@ -41,6 +41,15 @@ public class ApiAccessHandlerImpl implements ApiAccessHandler {
     }
 
     private boolean checkBlackList(String ip, LocalDateTime now) {
+        // 当前ip在配置的白名单中，允许访问
+        if(apiAccessOptions.getWhiteList() != null && apiAccessOptions.getWhiteList().contains(ip)){
+            return true;
+        }
+        // 当前ip在配置的黑名单中，直接拒绝访问
+        if(apiAccessOptions.getBlackList() != null && apiAccessOptions.getBlackList().contains(ip)){
+            return false;
+        }
+        // 当前ip未在黑名单中，允许访问
         if(!IP_BLACKLIST.containsKey(ip)){
             return true;
         }
