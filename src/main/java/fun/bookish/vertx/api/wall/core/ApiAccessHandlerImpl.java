@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class ApiAccessHandlerImpl implements ApiAccessHandler {
@@ -65,7 +66,7 @@ public class ApiAccessHandlerImpl implements ApiAccessHandler {
     private void checkAccessInterval(String ip, LocalDateTime now, RoutingContext context) {
         List<LocalDateTime> accessTimes = ACCESS_INTERVAL.get(ip);
         if(accessTimes == null){
-            List<LocalDateTime> newAccessTimes = new ArrayList<>();
+            List<LocalDateTime> newAccessTimes = new CopyOnWriteArrayList<>();
             List<LocalDateTime> putResult = ACCESS_INTERVAL.putIfAbsent(ip, newAccessTimes);
             accessTimes = putResult == null ? newAccessTimes : ACCESS_INTERVAL.get(ip);
         }
